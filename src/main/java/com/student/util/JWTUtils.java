@@ -6,7 +6,11 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
+
 import org.springframework.stereotype.Component;
+
+import com.student.dto.UserDetails;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
@@ -22,8 +26,10 @@ public class JWTUtils {
 	@Value("${secret}")
 	private String secret;
 
-	public  String generateToken(Map<String,Object> claims,String subject) {
-		return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis())).setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY * 1000))
+	public  String generateToken(Authentication authentication) {
+		
+		UserDetails userDetails=(UserDetails)authentication.getPrincipal();
+		return Jwts.builder().setSubject(userDetails.getUsername()).setIssuedAt(new Date(System.currentTimeMillis())).setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY * 1000))
 				.signWith(SignatureAlgorithm.HS512, secret).compact();
 	}
 	

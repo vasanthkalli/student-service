@@ -8,7 +8,7 @@ public class AuthenticationRequest implements Serializable {
 	
 	private String userName;
 	
-	private String secret;
+	private String password;
 
 	public String getUserName() {
 		return userName;
@@ -18,12 +18,14 @@ public class AuthenticationRequest implements Serializable {
 		this.userName = userName;
 	}
 
-	public String getSecret() {
-		return secret;
+	public String getPassword() {
+		return password;
 	}
 
-	public void setSecret(String secret) {
-		this.secret = secret;
+	public void setPassword(String password) {
+		this.password = password;
 	}
+
+
 
 }
